@@ -1,0 +1,18 @@
+web:
+  image: wordpress
+  restart: always
+  links:
+    - mysql
+  environment:
+    - WORDPRESS_DB_PASSWORD=password
+  volumes:
+    - ./wp-content:/var/www/html/wp-content
+    - ./ridingcats:/var/www/html/wp-content/themes/ridingcats
+  ports:
+    - 8080:80
+mysql:
+  image: mysql:5.7
+  restart: always
+  environment:
+    - MYSQL_ROOT_PASSWORD=password
+    - MYSQL_DATABASE=my-wpdb
