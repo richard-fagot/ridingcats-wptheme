@@ -1,7 +1,203 @@
 /*
 Theme Name: Riding Cats
 Theme URI: www.riding-cats.fr
-Description: Thème pour le site des Riding Cats
+Description: Theme for the Riding Cats rockabilly band
 Author: Richard Fagot
-Author URI: votre URL
+Version: 1.0
+License: WTFYW
+License URI: www.toto.com
+Text Domain: ridingcats
 */
+body {
+  font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  flex-flow: row wrap;
+  flex-basis: 80%
+}
+
+/* We tell all items to be 100% width, via flex-basis */
+.content > * {
+flex: 1 100%;
+}
+
+header {
+  background-color: #6e3a34;
+}
+
+section {
+  display: flex;
+  flex-flow: column;
+}
+
+section > * {
+  width: 80%
+}
+
+article {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+}
+/* We rely on source order for mobile-first approach
+* in this case:
+* 1. header
+* 2. article
+* 3. aside 1
+* 4. aside 2
+* 5. footer
+*/
+
+/* Medium screens */
+@media all and (min-width: 600px) {
+/* We tell both sidebars to share a row */
+.aside { flex: 1 auto; }
+}
+
+/* Large screens */
+@media all and (min-width: 800px) {
+/* We invert order of first sidebar and main
+ * And tell the main element to take twice as much width as the other two sidebars
+ */
+/*.main { flex: 2 0px; }*/
+.aside-1 { order: 1; }
+.main    { order: 2; }
+.aside-2 { order: 3; }
+.footer  { order: 4; }
+}
+
+
+/***************************
+* The top menu !
+****************************/
+.navigation {
+  list-style: none;
+  margin: 0;
+
+  /*background: deepskyblue;*/
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-flex-flow: row wrap;
+  /*justify-content: flex-end;*/
+}
+
+.navigation a {
+  text-decoration: none;
+  display: block;
+  padding: 1em;
+  color: #f9c2c2;
+}
+
+.navigation a:hover {
+  background: darken(deepskyblue, 2%);
+}
+
+@media all and (max-width: 800px) {
+  .navigation, .bio {
+    justify-content: space-around;
+  }
+}
+
+@media all and (max-width: 600px) {
+  .navigation, .bio {
+    -webkit-flex-flow: column wrap;
+    flex-flow: column wrap;
+    padding: 0;
+  }
+
+  .navigation a {
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+
+
+  .navigation li:last-of-type a {
+    border-bottom: none;
+  }
+}
+
+/******************
+*
+*  Biography
+*
+*******************/
+.bio {
+  /*display: flex;*/
+  width: 50%;
+  margin-top: 15px;
+}
+
+.bio-img {
+  display: flex;
+  flex-basis: 20em;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.bio-img img {
+  width: 300px;
+  height: auto;
+}
+
+.bio-txt {
+  display: flex;
+  align-items: center;
+  flex-basis: 50%;
+  background-color: #d8c688;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgba(51, 51, 51, 0.7);
+  color: white;
+  text-align: justify;
+  text-justify: inter-word;
+  padding: 15px;
+}
+
+
+/** Permet de position les images bien alignées à droite ou à gauche alternativement */
+article.bio:nth-child(odd) .bio-txt {
+  order: 1;
+}
+
+article.bio:nth-child(odd) .bio-img {
+  order: 2;
+  justify-content: flex-end;
+  margin-left: 15px;
+}
+
+article.bio:nth-child(even) .bio-txt {
+  order: 2;
+}
+
+article.bio:nth-child(even) .bio-img {
+  order: 1;
+  justify-content: flex-start;
+  margin-right: 15px;
+}
+
+/******************************
+*
+* Generic styles
+*
+*******************************/
+.rounded {
+  border-radius: 6px;
+}
+
+.box-shadowed {
+  box-shadow: 0 0 5px rgba(51, 51, 51, 0.7);
+}
+
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
