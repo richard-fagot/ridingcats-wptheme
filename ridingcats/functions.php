@@ -10,6 +10,7 @@
  */
 
 
+// Add suport for menu
 function register_my_menus() {
   register_nav_menus(
     array(
@@ -19,8 +20,10 @@ function register_my_menus() {
  }
  add_action( 'init', 'register_my_menus' );
 
+// Add support for thumbnails for all posts
  add_theme_support( 'post-thumbnails' );
 
+// Add support for background image and the abaility to customize it from the interface.
 $bckgnd = array(
   'default-repeat' => 'no-repeat',
   'default-attachment' => 'fixed',
@@ -29,8 +32,14 @@ $bckgnd = array(
 );
  add_theme_support( 'custom-background', $bckgnd );
 
+
+// Add custom style stylesheet to the header.
  wp_enqueue_style('style', get_stylesheet_uri());
 
+
+/*******************************************************************************
+Create the Actu post type
+*******************************************************************************/
  function wpm_actus_post_type() {
 
 	// On rentre les différentes dénominations de notre custom post type qui seront affichées dans l'administration
@@ -60,7 +69,7 @@ $bckgnd = array(
 		'description'         => __( 'Toutes les actus'),
 		'labels'              => $labels,
 		// On définit les options disponibles dans l'éditeur de notre custom post type ( un titre, un auteur...)
-		'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
+		'supports'            => array( 'title', 'editor', 'thumbnail' ),
 		/*
 		* Différentes options supplémentaires
 		*/
@@ -75,106 +84,110 @@ $bckgnd = array(
 	register_post_type( 'actus', $args );
 
 }
-
 add_action( 'init', 'wpm_actus_post_type', 0 );
 
 
-add_action( 'init', 'wpm_add_taxonomies', 0 );
+/******************************************************
+Add custom field FacebookLink
+(from https://www.taniarascia.com/wordpress-part-three-custom-fields-and-metaboxes/)
+******************************************************/
+//Add facebook link field to the Actu post
+function add_actus_meta_box() {
+	add_meta_box(
+		'fb_link', // $id
+		'Lien Facebook', // $title
+		'show_your_fields_meta_box', // $callback
+		'actus', // $screen
+		'normal', // $context
+		'high' // $priority
+	);
+}
+add_action( 'add_meta_boxes', 'add_actus_meta_box' );
 
-//On crée 3 taxonomies personnalisées: Année, Réalisateurs et Catégories de série.
+// Display the input box to enter the facebook link
+function show_your_fields_meta_box() {
+	global $post;
+		$meta = get_post_meta( $post->ID, 'actu_fields', true ); ?>
 
+	<input type="hidden" name="actu_fb_link" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
+
+  <p>
+	<input type="text" name="actu_fields[text]" id="actu_fields[text]" class="regular-text" value="<?php  if (is_array($meta) && isset($meta['text'])){ echo $meta['text']; } ?>">
+</p>
+
+	<?php }
+
+
+function save_actu_fields_meta( $post_id ) {
+  	// verify nonce
+  	if ( !wp_verify_nonce( $_POST['actu_fb_link'], basename(__FILE__) ) ) {
+  		return $post_id;
+  	}
+  	// check autosave
+  	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+  		return $post_id;
+  	}
+  	// check permissions
+  	if ( 'page' === $_POST['actus'] ) {
+  		if ( !current_user_can( 'edit_page', $post_id ) ) {
+  			return $post_id;
+  		} elseif ( !current_user_can( 'edit_post', $post_id ) ) {
+  			return $post_id;
+  		}
+  	}
+
+  	$old = get_post_meta( $post_id, 'actu_fields', true );
+  	$new = $_POST['actu_fields'];
+
+  	if ( $new && $new !== $old ) {
+  		update_post_meta( $post_id, 'actu_fields', $new );
+  	} elseif ( '' === $new && $old ) {
+  		delete_post_meta( $post_id, 'actu_fields', $old );
+  	}
+  }
+  add_action( 'save_post', 'save_actu_fields_meta' );
+
+
+/**************************************
+Add taxonomy Lieu to the actu post
+***************************************/
 function wpm_add_taxonomies() {
+	// Taxonomie Lieux
 
-	// Taxonomie Année
-
-	// On déclare ici les différentes dénominations de notre taxonomie qui seront affichées et utilisées dans l'administration de WordPress
-	$labels_annee = array(
-		'name'              			=> _x( 'Années', 'taxonomy general name'),
-		'singular_name'     			=> _x( 'Année', 'taxonomy singular name'),
-		'search_items'      			=> __( 'Chercher une année'),
-		'all_items'        				=> __( 'Toutes les années'),
-		'edit_item'         			=> __( 'Editer l année'),
-		'update_item'       			=> __( 'Mettre à jour l année'),
-		'add_new_item'     				=> __( 'Ajouter une nouvelle année'),
-		'new_item_name'     			=> __( 'Valeur de la nouvelle année'),
-		'separate_items_with_commas'	=> __( 'Séparer les réalisateurs avec une virgule'),
-		'menu_name'         => __( 'Année'),
-	);
-
-	$args_annee = array(
-	// Si 'hierarchical' est défini à false, notre taxonomie se comportera comme une étiquette standard
-		'hierarchical'      => false,
-		'labels'            => $labels_annee,
-		'show_ui'           => true,
-		'show_admin_column' => true,
-		'query_var'         => true,
-		'rewrite'           => array( 'slug' => 'annees' ),
-	);
-
-	register_taxonomy( 'annees', 'actus', $args_annee );
-
-	// Taxonomie Réalisateurs
-
-	$labels_realisateurs = array(
-		'name'                       => _x( 'Réalisateurs', 'taxonomy general name'),
-		'singular_name'              => _x( 'Réalisateur', 'taxonomy singular name'),
-		'search_items'               => __( 'Rechercher un réalisateur'),
-		'popular_items'              => __( 'Réalisateurs populaires'),
-		'all_items'                  => __( 'Tous les réalisateurs'),
-		'edit_item'                  => __( 'Editer un réalisateur'),
-		'update_item'                => __( 'Mettre à jour un réalisateur'),
-		'add_new_item'               => __( 'Ajouter un nouveau réalisateur'),
-		'new_item_name'              => __( 'Nom du nouveau réalisateur'),
-		'separate_items_with_commas' => __( 'Séparer les réalisateurs avec une virgule'),
-		'add_or_remove_items'        => __( 'Ajouter ou supprimer un réalisateur'),
+	$labels_lieux = array(
+		'name'                       => _x( 'Lieux', 'taxonomy general name'),
+		'singular_name'              => _x( 'Lieu', 'taxonomy singular name'),
+		'search_items'               => __( 'Rechercher un lieu'),
+		'popular_items'              => __( 'Lieux populaires'),
+		'all_items'                  => __( 'Tous les lieux'),
+		'edit_item'                  => __( 'Editer un lieu'),
+		'update_item'                => __( 'Mettre à jour un lieu'),
+		'add_new_item'               => __( 'Ajouter un nouveau lieu'),
+		'new_item_name'              => __( 'Nom du nouveau lieu'),
+		'separate_items_with_commas' => __( 'Séparer les lieux avec une virgule'),
+		'add_or_remove_items'        => __( 'Ajouter ou supprimer un lieu'),
 		'choose_from_most_used'      => __( 'Choisir parmi les plus utilisés'),
-		'not_found'                  => __( 'Pas de réalisateurs trouvés'),
-		'menu_name'                  => __( 'Réalisateurs'),
+		'not_found'                  => __( 'Pas de lieu trouvé'),
+		'menu_name'                  => __( 'Lieux'),
 	);
 
-	$args_realisateurs = array(
+	$args_lieux = array(
 		'hierarchical'          => false,
-		'labels'                => $labels_realisateurs,
+		'labels'                => $labels_lieux,
 		'show_ui'               => true,
 		'show_admin_column'     => true,
 		'update_count_callback' => '_update_post_term_count',
 		'query_var'             => true,
-		'rewrite'               => array( 'slug' => 'realisateurs' ),
+		'rewrite'               => array( 'slug' => 'lieux' ),
 	);
 
-	register_taxonomy( 'realisateurs', 'actus', $args_realisateurs );
-
-	// Catégorie de série
-
-	$labels_cat_serie = array(
-		'name'                       => _x( 'Catégories de série', 'taxonomy general name'),
-		'singular_name'              => _x( 'Catégories de série', 'taxonomy singular name'),
-		'search_items'               => __( 'Rechercher une catégorie'),
-		'popular_items'              => __( 'Catégories populaires'),
-		'all_items'                  => __( 'Toutes les catégories'),
-		'edit_item'                  => __( 'Editer une catégorie'),
-		'update_item'                => __( 'Mettre à jour une catégorie'),
-		'add_new_item'               => __( 'Ajouter une nouvelle catégorie'),
-		'new_item_name'              => __( 'Nom de la nouvelle catégorie'),
-		'add_or_remove_items'        => __( 'Ajouter ou supprimer une catégorie'),
-		'choose_from_most_used'      => __( 'Choisir parmi les catégories les plus utilisées'),
-		'not_found'                  => __( 'Pas de catégories trouvées'),
-		'menu_name'                  => __( 'Catégories de série'),
-	);
-
-	$args_cat_serie = array(
-	// Si 'hierarchical' est défini à true, notre taxonomie se comportera comme une catégorie standard
-		'hierarchical'          => true,
-		'labels'                => $labels_cat_serie,
-		'show_ui'               => true,
-		'show_admin_column'     => true,
-		'query_var'             => true,
-		'rewrite'               => array( 'slug' => 'categories-series' ),
-	);
-
-	register_taxonomy( 'categoriesseries', 'actus', $args_cat_serie );
+	register_taxonomy( 'lieux', 'actus', $args_lieux );
 }
+add_action( 'init', 'wpm_add_taxonomies', 0 );
 
+/*******************************************************************************
+Add default categories
+*******************************************************************************/
 function example_insert_category() {
 	wp_insert_term(
 		'BIOGRAPHIE',
