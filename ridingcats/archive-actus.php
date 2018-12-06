@@ -1,20 +1,35 @@
-<?php
-get_header();
+<?php get_header();?>
 
+<section class="main">
+
+<?php
 $actus = get_posts(array('post_type' => 'actus'));
 
 if($actus) :
   foreach ($actus as $post) :
     setup_postdata($post);
+    $meta = get_post_meta( $post->ID, 'actu_fields', true );
     ?>
-    <p><?php echo get_the_date("d");?></p>
-    <p><?php echo get_the_date("M");?></p>
-    <p><?php echo get_the_date("Y");?></p>
-    <p>Concert : <?php the_title()?></p>
-    <p>Facebook : <?php $meta = get_post_meta( $post->ID, 'actu_fields', true ); echo $meta['text']; ?></p>
-    <p>Lieu : <?php the_terms( $post->ID, 'lieux' ); ?></p>
-    <p><img class="rounded box-shadowed" src="<?php the_post_thumbnail_url()?>"/></p>
+
+    <article class="actu">
+        <div class="date">
+          <div class="day"><?php echo get_the_date("d");?></div>
+          <div class="month"><?php echo get_the_date("M");?></div>
+          <div class="year"><?php echo get_the_date("Y");?></div>
+        </div>
+        <div class="thumbnail"><img src="<?php the_post_thumbnail_url()?>"/></div>
+        <div class="actu-content">
+          <div class="title"><?php the_title()?></div>
+          <div class="location"><?php echo strip_tags(get_the_term_list( $post->ID, 'lieux' )); ?></div>
+        </div>
+
+        <?php if ($meta['text']) :?>
+        <div class="fblink"><a href="<?php echo $meta['text']; ?>"><img src="<?php echo get_theme_root_uri()?>/ridingcats/assets/images/fb.png" width="120px" height="120px"/></a></div>
+        <?php endif ?>
+      </article>
     <?php
   endforeach;
 endif;
-get_footer(); ?>
+?>
+</section>
+<?php get_footer(); ?>

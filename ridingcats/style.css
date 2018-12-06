@@ -184,6 +184,104 @@ article.bio:nth-child(even) .bio-img {
   margin-right: 15px;
 }
 
+
+/******************
+*
+*  Actus
+*
+*******************/
+.actu {
+  width: 50%;
+  margin-top: 15px;
+  justify-content: flex-start;
+}
+
+.date {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  width: 120px;
+}
+
+.day {
+  font-size: 36pt;
+  font-weight: 100;
+  line-height: 1;
+}
+
+.month {
+  font-size: 24pt;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.year {
+  font-size: 24pt;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.thumbnail {
+  width: 120px;
+  height: 120px;
+}
+
+.thumbnail img {
+  width: 120px;
+  height: 120px;
+  min-height: 0;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.actu-content {
+  align-self: stretch;
+}
+
+.title {
+  font-size: 17pt;
+  font-weight: 700;
+  padding-left: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.location {
+  font-size: 13pt;
+  font-weight: 300;
+  padding-left: 0.5rem;
+}
+
+.fblink {
+  width: 120px;
+  height: 120px;
+  margin-left: auto;
+}
+
+.actu:nth-child(odd) {
+  background-color: #69b2bb;
+}
+
+.actu:nth-child(even) {
+  background-color: #ef86a4;
+}
+
+@media all and (max-width: 800px) {
+
+}
+
+@media all and (max-width: 600px) {
+  .actu {
+    flex-direction: column;
+    align-items: center;
+  }
+  }
+}
+
 /******************************
 *
 * Generic styles
