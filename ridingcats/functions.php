@@ -69,7 +69,7 @@ Create the Actu post type
 		'description'         => __( 'Toutes les actus'),
 		'labels'              => $labels,
 		// On définit les options disponibles dans l'éditeur de notre custom post type ( un titre, un auteur...)
-		'supports'            => array( 'title', 'editor', 'thumbnail' ),
+		'supports'            => array( 'title', 'thumbnail' ),
 		/*
 		* Différentes options supplémentaires
 		*/
