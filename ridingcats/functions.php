@@ -39,6 +39,7 @@ $bckgnd = array(
 
 /*******************************************************************************
 Create the Actu post type
+from (https://wpmarmite.com/snippet/creer-custom-post-type/)
 *******************************************************************************/
  function wpm_actus_post_type() {
 
