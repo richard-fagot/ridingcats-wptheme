@@ -7,7 +7,9 @@ if($actus) :
   foreach ($actus as $post) :
     setup_postdata($post);
     ?>
-
+    <p><?php echo get_the_date("d");?></p>
+    <p><?php echo get_the_date("M");?></p>
+    <p><?php echo get_the_date("Y");?></p>
     <p>Concert : <?php the_title()?></p>
     <p>Facebook : <?php $meta = get_post_meta( $post->ID, 'actu_fields', true ); echo $meta['text']; ?></p>
     <p>Lieu : <?php the_terms( $post->ID, 'lieux' ); ?></p>
