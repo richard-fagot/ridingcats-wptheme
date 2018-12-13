@@ -149,6 +149,117 @@ function save_actu_fields_meta( $post_id ) {
   add_action( 'save_post', 'save_actu_fields_meta' );
 
 
+  /*******************************************************************************
+  Create the Video post type
+  from (https://wpmarmite.com/snippet/creer-custom-post-type/)
+  *******************************************************************************/
+   function wpm_video_post_type() {
+
+  	// On rentre les différentes dénominations de notre custom post type qui seront affichées dans l'administration
+  	$labels = array(
+  		// Le nom au pluriel
+  		'name'                => _x( 'Videos', 'Post Type General Name'),
+  		// Le nom au singulier
+  		'singular_name'       => _x( 'Video', 'Post Type Singular Name'),
+  		// Le libellé affiché dans le menu
+  		'menu_name'           => __( 'Videos'),
+  		// Les différents libellés de l'administration
+  		'all_items'           => __( 'Toutes les videos'),
+  		'view_item'           => __( 'Voir les videos'),
+  		'add_new_item'        => __( 'Ajouter une video'),
+  		'add_new'             => __( 'Ajouter'),
+  		'edit_item'           => __( 'Editer'),
+  		'update_item'         => __( 'Modifier'),
+  		'search_items'        => __( 'Rechercher'),
+  		'not_found'           => __( 'Non trouvée'),
+  		'not_found_in_trash'  => __( 'Non trouvée dans la corbeille'),
+  	);
+
+  	// On peut définir ici d'autres options pour notre custom post type
+
+  	$args = array(
+  		'label'               => __( 'Videos'),
+  		'description'         => __( 'Toutes les videos'),
+  		'labels'              => $labels,
+  		// On définit les options disponibles dans l'éditeur de notre custom post type ( un titre, un auteur...)
+  		'supports'            => array( 'title' ),
+  		/*
+  		* Différentes options supplémentaires
+  		*/
+  		'hierarchical'        => false,
+  		'public'              => true,
+  		'has_archive'         => true,
+  		'rewrite'			  => array( 'slug' => 'videos'),
+
+  	);
+
+  	// On enregistre notre custom post type qu'on nomme ici "serietv" et ses arguments
+  	register_post_type( 'videos', $args );
+
+  }
+  add_action( 'init', 'wpm_video_post_type', 0 );
+
+
+  /******************************************************
+  Add custom field youtube id
+  (from https://www.taniarascia.com/wordpress-part-three-custom-fields-and-metaboxes/)
+  ******************************************************/
+  //Add facebook link field to the Actu post
+  function add_videos_meta_box() {
+  	add_meta_box(
+  		'y_link', // $id
+  		'ID Video', // $title
+  		'display_video_fields_meta_box', // $callback
+  		'videos', // $screen
+  		'normal', // $context
+  		'high' // $priority
+  	);
+  }
+  add_action( 'add_meta_boxes', 'add_videos_meta_box' );
+
+  // Display the input box to enter the facebook link
+  function display_video_fields_meta_box() {
+  	global $post;
+  		$meta = get_post_meta( $post->ID, 'video_fields', true ); ?>
+
+  	<input type="hidden" name="video_id" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
+
+    <p>
+  	<input type="text" name="video_fields[text]" id="video_fields[text]" class="regular-text" value="<?php  if (is_array($meta) && isset($meta['text'])){ echo $meta['text']; } ?>">
+  </p>
+
+  	<?php }
+
+
+  function save_video_fields_meta( $post_id ) {
+    	// verify nonce
+    	if ( !wp_verify_nonce( $_POST['video_id'], basename(__FILE__) ) ) {
+    		return $post_id;
+    	}
+    	// check autosave
+    	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+    		return $post_id;
+    	}
+    	// check permissions
+    	if ( 'page' === $_POST['videos'] ) {
+    		if ( !current_user_can( 'edit_page', $post_id ) ) {
+    			return $post_id;
+    		} elseif ( !current_user_can( 'edit_post', $post_id ) ) {
+    			return $post_id;
+    		}
+    	}
+
+    	$old = get_post_meta( $post_id, 'video_fields', true );
+    	$new = $_POST['video_fields'];
+
+    	if ( $new && $new !== $old ) {
+    		update_post_meta( $post_id, 'video_fields', $new );
+    	} elseif ( '' === $new && $old ) {
+    		delete_post_meta( $post_id, 'video_fields', $old );
+    	}
+    }
+    add_action( 'save_post', 'save_video_fields_meta' );
+
 /**************************************
 Add taxonomy Lieu to the actu post
 ***************************************/

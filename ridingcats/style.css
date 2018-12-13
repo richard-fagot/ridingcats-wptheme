@@ -157,6 +157,7 @@ article {
   border-radius: 6px;
   box-shadow: 0 0 5px rgba(51, 51, 51, 0.7);
   color: white;
+  font-size: 18pt;
   text-align: justify;
   text-justify: inter-word;
   padding: 15px;
@@ -283,6 +284,51 @@ article.bio:nth-child(even) .bio-img {
 
 /******************************
 *
+* Contact
+*
+*******************************/
+.main-contact {
+  flex-flow: wrap;
+  justify-content: center;
+}
+
+.contact {
+  width: auto;
+  flex-flow: column;
+  align-items: center;
+  margin: 2rem;
+}
+
+.contact > img {
+  width: 200px;
+  height: 200px;
+  min-height: 0;
+  min-width: 0;
+}
+
+.contact-detail {
+  background-color: #ef86a4;
+  font-size: 17pt;
+  font-weight: 700;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgba(51, 51, 51, 0.7);
+}
+
+.contact-detail a {
+  color: black;
+}
+
+@media all and (max-width: 600px) {
+  .main-contact {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/******************************
+*
 * Presse
 *
 *******************************/
@@ -307,6 +353,42 @@ article.bio:nth-child(even) .bio-img {
   color: white;
   padding: 2rem;
 }
+
+/******************
+*
+*  Video
+*
+*******************/
+.video-details {
+  width: auto;
+  margin-top: 15px;
+  flex-flow: column;
+
+  box-shadow: 0 0 5px rgba(51, 51, 51, 0.7);
+}
+
+.video {
+  height: 315px;
+}
+
+.video-title {
+  display: flex;
+
+  text-align: center;
+  vertical-align: middle;
+  text-transform: uppercase;
+  font-size: 18px;
+  color: white;
+
+  background-color: #d8c688;
+  min-height: 3rem;
+
+}
+
+.video-title div {
+  margin: auto;
+}
+
 
 /******************************
 *

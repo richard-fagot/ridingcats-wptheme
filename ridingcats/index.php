@@ -2,7 +2,7 @@
 <?php
 get_header();
 
-$gallery = get_posts(array('category_name' => 'gallery'));
+$gallery = get_posts(array('category_name' => 'video'));
 
 if($gallery) :
   foreach ($gallery as $post) :
