@@ -16,3 +16,5 @@ mysql:
   environment:
     - MYSQL_ROOT_PASSWORD=password
     - MYSQL_DATABASE=my-wpdb
+  volumes:
+    - ./db-data:/var/lib/mysql
