@@ -1,15 +1,8 @@
 
 <?php
 get_header();
-
-$gallery = get_posts(array('category_name' => 'video'));
-
-if($gallery) :
-  foreach ($gallery as $post) :
-  setup_postdata($post);
-  the_content();
-endforeach;
-endif;
  ?>
+
+<?php echo apply_filters( 'the_content', get_post(get_query_var( 'page_id', 1 ))->post_content );  ?>
 
  <?php get_footer(); ?>

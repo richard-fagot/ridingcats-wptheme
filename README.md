@@ -3,21 +3,28 @@ Thème wordpress pour le site du groupe de rockabilly **Riding Cats**.
 Ce projet contient les sources du thème (répertoire *ridingcats*) ainsi que la configuration *Docker* permettant de faciliter les déveoppements et les tests.
 
 
-# Prerequis
+# Développement
+## Prerequis
 Docker version 18.09.0, build 4d60db4
 
-# Commmencer à développer
+## Commmencer à développer
 ```sh
 docker-compose up -d
 ```
 
-Then open your browser on http://localhost:8080
+Puis ouvrir le navigateur sur http://localhost:8080
 
 Deux volumes sont montés :
 - le répertoire *ridingcats* du projet dans le répertoire *theme* du *wordpress* ;
 - le répertoire *wp-content* du *wordpress* dans le répertoire du projet pour pouvoir s'inspirer des thèmes existants.
 
 # Guide d'utilisation
+
+## Installation
+- Installer un wordpress ;
+- Installer le plugin **Final Tiles Grid Gallery**.
+
+## Utilisation
 Le principe du thème est d'afficher tous les posts d'une catégorie sur une seule page (il n'y a pas d'affichage d'un seul post à la fois.).
 
 Ces posts doivent être simple (un texte, une image à mettre en avant, une date...).
@@ -71,4 +78,9 @@ Le menu (*Header menu*) est constitué ainsi :
 - *Presse* : //TODO
 - *Contact* : //TODO
 - *Vidéos* : //TODO
-- *Photos* : //TODO
+- *Photos* :
+  1. Créer une gallerie avec **Final Tiles Grid Gallery**,
+  1. Copier le *shortcode*,
+  1. Créer une page nommée *Gallerie Photo*,
+  1. Y coller le shortcode,
+  1. Editer le menu et ajouter la page *Gallerie Photo* avec comme nom de menu *PHOTOS*.
