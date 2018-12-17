@@ -73,14 +73,9 @@ Une biographie est constituée d'un texte et d'une image de 300px de large.
 
 Le menu (*Header menu*) est constitué ainsi :
 - *Riding Cats* : lien personnalisé amenant à la page d'accueil ;
-- *Biographie* : menu affichant la catégorie *Biographie*
-- *Actus* : //TODO
-- *Presse* : //TODO
-- *Contact* : //TODO
-- *Vidéos* : //TODO
-- *Photos* :
-  1. Créer une gallerie avec **Final Tiles Grid Gallery**,
-  1. Copier le *shortcode*,
-  1. Créer une page nommée *Gallerie Photo*,
-  1. Y coller le shortcode,
-  1. Editer le menu et ajouter la page *Gallerie Photo* avec comme nom de menu *PHOTOS*.
+- *Biographie* : menu affichant la catégorie *Biographie* ;
+- *Actus* : menu affichant toutes les posts de type *Actus* ;  
+- *Presse* : menu affichant la catégorie *Presse* ;
+- *Contact* : menu affichant la catégorie *Contact* ;
+- *Vidéos* : menu affichant toutes les posts de type *Video* ;  
+- *Photos* : menu affichant une page contenant le *shortcode* de la gallerie créée avec *Final Tiles Grid Gallery*.
