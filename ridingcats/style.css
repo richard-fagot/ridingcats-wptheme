@@ -126,6 +126,9 @@ article {
   }
 }
 
+.navigation li.lang {
+  margin-left: auto;
+}
 /******************
 *
 *  Biography

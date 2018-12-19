@@ -19,24 +19,18 @@
 
           $menu = wp_get_nav_menu_object( get_nav_menu_locations()['header-menu'] );
           $menu_items = wp_get_nav_menu_items($menu->term_id);
-
+					$lang = get_query_var( 'lang', 'fr' );
+					echo $lang;
           foreach ( $menu_items as $menu_item ) {
             $title = $menu_item->title;
             $url = $menu_item->url;
-            echo '<li><a href="' . $url . '">' . $title . '</a></li>';
+            echo '<li><a href="' . add_query_arg('lang', $lang, $url) . '">' . $title . '</a></li>';
           }
         //wp_nav_menu( array( 'theme_location' => 'header-menu' ) );
         ?>
-<!--
-        <ul class="navigation">
-<?php
 
-$categories = get_categories();
-foreach($categories as $cat) {
-  echo '<li><a href="' . get_category_link($cat->term_id) . '">' . $cat->name . '</a></li>';
-}
- ?>
--->
+				<li class="lang"><a href="<?php echo add_query_arg('lang', 'fr')?>">FR</a></li>
+				<li><a href="<?php echo add_query_arg('lang', 'en')?>">EN</a></li>
 </ul>
 
 </nav>

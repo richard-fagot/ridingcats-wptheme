@@ -21,7 +21,13 @@
      ) );
  }
  add_action( 'widgets_init', 'arphabet_widgets_init' );
- 
+
+ function add_query_vars_language( $vars ) {
+  $vars[] = "lang";
+  return $vars;
+}
+add_filter( 'query_vars', 'add_query_vars_language' );
+
 // Add suport for menu
 function register_my_menus() {
   register_nav_menus(
