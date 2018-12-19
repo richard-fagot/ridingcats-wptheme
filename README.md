@@ -49,9 +49,9 @@ Une biographie est constituée d'un texte et d'une image de 300px de large.
 1. Créer un nouvel article ;
 1. Le titre n'a pas d'importance ;
 1. Le corps du post contient un texte éventuellement mis en forme ;
-1. L'image à associer est mise dans le champ *Image à la une* ;
+1. L'image à associer est mise dans le champ *Image à la une* et fait idéalement 300px de large ;
 1. La date est choisie pour afficher cette entrée au bon endroit (les posts sont affichés de la date la plus récente à la plus ancienne) ;
-1. On affecte la catégorie *Biographie* et on retire toutes les autres ;
+1. On affecte uniquement la catégorie *Biographie* et la langue choisie;
 1. Publier l'article.
 
 ## Créer une entrée Actu
