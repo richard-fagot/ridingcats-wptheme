@@ -22,6 +22,7 @@ if($actus) :
     <?php
   endforeach;
 endif;
+wp_reset_postdata();
 ?>
 </section>
 <?php get_footer(); ?>

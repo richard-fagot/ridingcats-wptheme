@@ -31,6 +31,7 @@ if($biblio) :
     <?php
   endforeach;
 endif;
+wp_reset_postdata();
  ?>
 
 </section>
