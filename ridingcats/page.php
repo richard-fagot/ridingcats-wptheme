@@ -1,5 +1,10 @@
 
 <?php
+/*****************
+*
+* The purpose of this page is to display only the photo gallery.
+*
+******************/
 get_header();
  ?>
 
