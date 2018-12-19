@@ -20,7 +20,7 @@
           $menu = wp_get_nav_menu_object( get_nav_menu_locations()['header-menu'] );
           $menu_items = wp_get_nav_menu_items($menu->term_id);
 					$lang = get_query_var( 'lang', 'fr' );
-					echo $lang;
+					
           foreach ( $menu_items as $menu_item ) {
             $title = $menu_item->title;
             $url = $menu_item->url;

@@ -5,7 +5,8 @@
 
 
   <?php
-  $presse = get_posts(array('category_name' => 'presse'));
+  $lang = get_query_var('lang', 'fr');
+  $presse = get_posts(array('category_name' => 'presse+'.$lang, 'nopaging' => true));
   if($presse) :
     foreach ($presse as $post) :
       setup_postdata($post);

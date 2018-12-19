@@ -5,7 +5,8 @@
 
 
 <?php
-$contacts = get_posts(array('category_name' => 'contact'));
+$lang = get_query_var('lang', 'fr');
+$contacts = get_posts(array('category_name' => 'contact+'.$lang, 'nopaging' => true));
 
 if($contacts) :
   foreach ($contacts as $post) :

@@ -3,7 +3,7 @@
 <section class="main">
 
 <?php
-$actus = get_posts(array('post_type' => 'actus'));
+$actus = get_posts(array('post_type' => 'actus', 'nopaging' => true));
 
 if($actus) :
   foreach ($actus as $post) :

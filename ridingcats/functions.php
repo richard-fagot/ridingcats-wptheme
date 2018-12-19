@@ -22,11 +22,19 @@
  }
  add_action( 'widgets_init', 'arphabet_widgets_init' );
 
+/*************************************************
+*
+* Declare the language custom query parameter.
+*
+*************************************************/
  function add_query_vars_language( $vars ) {
   $vars[] = "lang";
   return $vars;
 }
 add_filter( 'query_vars', 'add_query_vars_language' );
+
+
+
 
 // Add suport for menu
 function register_my_menus() {
@@ -365,6 +373,22 @@ function example_insert_category() {
 		array(
 		  'description'	=> 'Les moyens de contact',
 		  'slug' 		=> 'contact'
+		)
+	);
+  wp_insert_term(
+		'Anglais',
+		'category',
+		array(
+		  'description'	=> 'Post en Anglais',
+		  'slug' 		=> 'en'
+		)
+	);
+  wp_insert_term(
+		'Français',
+		'category',
+		array(
+		  'description'	=> 'Post en Français',
+		  'slug' 		=> 'fr'
 		)
 	);
 }

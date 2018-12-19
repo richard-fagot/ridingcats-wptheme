@@ -8,7 +8,8 @@
   </article>
 
 <?php
-$biblio = get_posts(array('category_name' => 'bio'));
+$lang = get_query_var('lang', 'fr');
+$biblio = get_posts(array('category_name' => 'bio+'.$lang, 'nopaging' => true));
 
 if($biblio) :
   foreach ($biblio as $post) :
