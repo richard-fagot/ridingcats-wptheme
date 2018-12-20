@@ -68,7 +68,8 @@ Une biographie est constituée d'un texte et d'une image de 300px de large.
 //TODO
 
 ## Créer une entrée Vidéo
-//TODO
+1. Saisir le titre de la vidéo ;
+1. Saisir l'id Youtube de la vidéo.
 
 ## Créer une entrée Photo
 //TODO
