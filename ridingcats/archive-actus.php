@@ -17,7 +17,13 @@ if($actus) :
           <div class="month"><?php echo get_the_date("M");?></div>
           <div class="year"><?php echo get_the_date("Y");?></div>
         </div>
-        <div class="thumbnail"><img src="<?php the_post_thumbnail_url()?>"/></div>
+        <?php
+          $thumbnail = get_theme_root_uri()."/ridingcats/assets/images/actus-default.png";
+          if(has_post_thumbnail()):
+            $thumbnail = get_the_post_thumbnail_url();
+          endif
+         ?>
+        <div class="thumbnail"><img src="<?php echo $thumbnail?>"/></div>
         <div class="actu-content">
           <div class="title"><?php the_title()?></div>
           <div class="location"><?php echo strip_tags(get_the_term_list( $post->ID, 'lieux' )); ?></div>
