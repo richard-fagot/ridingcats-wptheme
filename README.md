@@ -55,7 +55,11 @@ Une biographie est constituée d'un texte et d'une image de 300px de large.
 1. Publier l'article.
 
 ## Créer une entrée Actu
-//TODO
+1. Saisir le titre du concert dans le premier champ ;
+1. Saisir le lien facebook s'il y en a un (une image F apparait dans l'actu si le lien est fourni) ;
+1. Ajouter une image 120x120 dans le champ *featured image* ;
+1. Saisir le lieu (si il a déjà été saisi par ailleurs on peut y accéder via *choisir parmi les plus utilisés*) ;
+1. Saisir la date du concert en cliquant sur le lien *edit* du champ *Publish* (date du post).
 
 ## Créer une entrée Presse
 //TODO
